@@ -15,16 +15,25 @@ st.subheader('sou um título 3 / subtítulo')
 # Text
 st.text('Isto é um texto: Eu S2 Python!')
 
+var = 10
+st.text(f'Minha var = {var}')
+
 # Markdown
 st.markdown("""
     # Título 1
     ## Título 2
-    ### Subtítulo
+    ### Título 3
     
     - texto normal
     - **negrito**
-    - *itálico*           
+    - *itálico* 
+    
+    :smile:          
 """)
+
+code = '''def hello():
+    print("Hello, Streamlit!")'''
+st.code(code, language='python')
 
 
 

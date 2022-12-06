@@ -42,7 +42,7 @@ with col3:
 # Expander
 st.header('Expander')
 st.bar_chart({"data": [1, 5, 2, 6, 2, 1]})
-with st.expander('Mais explicações:'):
+with st.expander('Mais explicações:', expanded=True):
     st.write("""Notamos que o cenário 3 apresentou
              uma maior frequência de ocorrência denotando
              de forma sui generis uma maior propensão do mesmo.""")

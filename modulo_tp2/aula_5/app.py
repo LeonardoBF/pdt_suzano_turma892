@@ -6,32 +6,68 @@ import streamlit as st
 
 
 # função que carrega o dataset
-
+def carregar_dataset(nome_dataset):
+    return sns.load_dataset(nome_dataset)
 
 
 # CORPO
 ## CORPO - Título da Aplicação
-
+st.markdown("""
+            # iNalyze
+            ### *A sua ferramenta de análise de dados*
+            ---
+            """)
 
 
 ## CORPO - Carregando o dataset
-
+nome_dataset = \
+    st.text_input('Qual o nome do dataset?',
+                  value='penguins')
+   
+if nome_dataset: 
+    df = carregar_dataset(nome_dataset)
+    
         
 # SIDEBAR
 ## SIDEBAR - Filtro dos campos
-
+with st.sidebar:
+    st.title('Filtros')
+    cols_selected = \
+        st.multiselect('Filtre os campos que deseja para a análise:',
+                   options=list(df.columns),
+                   default=list(df.columns))
 
 # filtra os campos selecionados
-
+df_selected = df[cols_selected]
     
     
 ## CORPO - Info do dataset
 
+with st.expander('Dados do Dataset'):
+    st.header('Dados do Dataset')
+    st.subheader('Primeiros Registros')
+    st.dataframe(df_selected.head(), width=600)
 
+    st.subheader('Colunas')
+    for col in df_selected.columns:
+        st.markdown(f'- {col}')
+        
+    st.subheader('Dados Faltantes')
+    st.write(df_selected.isna().sum()[df_selected.isna().sum() > 0])
+
+    st.subheader('Estatísticas Descritivas')
+    st.write(df_selected.describe())
 
 ## CORPO - Análise Univariada
+st.header('Análise Univariada')
+univar_campo = \
+    st.selectbox('Selecione um campo númerico para avaliar sua distribuição:',
+                 options=list(df_selected.select_dtypes(include=np.number).columns))
+    
+st.plotly_chart(px.histogram(data_frame=df_selected, x=univar_campo))
+st.plotly_chart(px.box(data_frame=df_selected, y=univar_campo))
 
-
+# st.write(df_selected.select_dtypes(include=np.number))
 
 ## CORPO - Análise Bivariada
 

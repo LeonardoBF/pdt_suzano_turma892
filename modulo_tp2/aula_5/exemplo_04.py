@@ -1,8 +1,8 @@
 import numpy as np
 import streamlit as st
 
-## -- Widgets e Fluxo -- ##
-st.title('Widgets e Fluxo')
+## -- Input e Fluxo -- ##
+st.title('Input e Fluxo')
 
 
 # checkbox

@@ -18,6 +18,9 @@ def soma(a, b):
 
 st.write(soma)
 
+x = 10
+st.write(x)
+
 df = pd.DataFrame({
     'col1': [1, 2, 3, 4, 5],
     'col2': [10, 20, 30, 40, 50]
