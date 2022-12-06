@@ -67,18 +67,50 @@ univar_campo = \
 st.plotly_chart(px.histogram(data_frame=df_selected, x=univar_campo))
 st.plotly_chart(px.box(data_frame=df_selected, y=univar_campo))
 
-# st.write(df_selected.select_dtypes(include=np.number))
 
 ## CORPO - Análise Bivariada
-
+st.header('Análise Bivariada')
+bivar_graf_option = \
+    st.radio('Escolha um tipo de gráfico:',
+             options=['dispersão', 'boxplot', 'pairplot'])
 
 ### CORPO - Análise Bivariada - gráfico de dispersão
-
+if bivar_graf_option == 'dispersão':
+    campo_dispersao_1 =  \
+        st.selectbox('Selecione primeira variável numérica:',
+                     options=list(df_selected.select_dtypes(include=np.number)))
         
-### CORPO - Análise Bivariada - gráfico de boxplot
+    campo_dispersao_2 =  \
+        st.selectbox('Selecione segunda variável numérica:',
+                     options=list(df_selected.select_dtypes(include=np.number)))
+        
+    st.plotly_chart(
+        px.scatter(data_frame=df_selected, 
+                   x=campo_dispersao_1, 
+                   y=campo_dispersao_2)
+    )
 
 
-### CORPO - Análise Bivariada - gráfico de pairplot
+### CORPO - Análise Bivariada - gráfico de boxplot       
+elif bivar_graf_option == 'boxplot':
+    campo_boxplot_num =  \
+        st.selectbox('Selecione uma variável numérica:',
+                     options=list(df_selected.select_dtypes(include=np.number)))
+        
+    campo_boxplot_cat =  \
+        st.selectbox('Selecione uma variável categórica:',
+                     options=list(df_selected.select_dtypes(exclude=np.number)))
+        
+    st.plotly_chart(
+        px.box(data_frame=df_selected, 
+                   x=campo_boxplot_cat, 
+                   y=campo_boxplot_num)
+    )
+
+### CORPO - Análise Bivariada - gráfico de pairplot  
+else:
+    pairplot = sns.pairplot(df_selected)
+    st.pyplot(pairplot)
 
     
 
